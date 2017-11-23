@@ -11,7 +11,6 @@ static uint8_t status = 0;
 
 void keyboard_handler() {
 	char l = getKey();
-	draw_word("Entro con julian",10,0);
 	if(l >0) {
 		if(kbdus[l]) {
 			if(status & 1<<SHIFT){

@@ -85,9 +85,9 @@ void * initializeKernelBinary()
 	load_idt();
 
 	int a = ((EntryPoint)sampleCodeModuleAddress)();
-	char frase[2] = {a+48,0};
-	draw_word(frase,0,0);
-	draw_word("Salio de sampleModuleAddress",100,0);
+	//char frase[2] = {a+48,0};
+	//draw_word(frase,0,0);
+	//draw_word("Salio de sampleModuleAddress",100,0);
 
 	return getStackBase();
 }

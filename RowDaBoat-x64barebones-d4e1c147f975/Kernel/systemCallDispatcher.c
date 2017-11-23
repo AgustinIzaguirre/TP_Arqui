@@ -24,7 +24,7 @@ uint64_t sys_getScreenInfo(uint64_t rdi);
 
 uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t r8, uint64_t r9) {
 		uint64_t result;
-		draw_word("Entro en el dispatcher",0,0);
+		//draw_word("Entro en el dispatcher",0,0);
 		switch(rax) {
 			// case 0:
 			// 	return sys_read(rdi,rsi,rdx);
@@ -62,16 +62,17 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 				result =  sys_getScreenInfo(rdi);
 				break;
 		}
-		// char c = rax;
-		// int80(1,0,&c,1,0,0);
-
+		
 		return result;
 }
 
 uint64_t sys_write(unsigned int fd, const char* buffer, uint64_t count) {
 	int i = 0;
 	while(i<count){
-		draw_char(buffer[i]);
+		if(buffer[i] == '\n')
+			newLine();
+		else
+			draw_char(buffer[i]);
 		i++;
 	}
 	return count;

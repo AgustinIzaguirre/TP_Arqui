@@ -41,16 +41,16 @@ void intToStr(int num,char * ret){
 		ret[0]='0';
 	}	
 }
-// void strrev(char * str){
-// 	int length= strlen(str);
-// 	char aux[length];
-// 	int i;
-// 	strcpy(str,aux);
+void strrev(char * str){
+	int length= strlen(str);
+	char aux[length];
+	int i;
+	strcpy(str,aux);
 
-// 	for (i = 0; i < length; i++) {
-// 		str[length - 1 - i] = aux[i];
-// 	}
-// }
+	for (i = 0; i < length; i++) {
+		str[length - 1 - i] = aux[i];
+	}
+}
 
 int strlen(const char * str){
 	int i=0;
@@ -110,5 +110,5 @@ void printf(const char * str,...){
 }
 
 void putchar(const char c){
-	_int80(3,1,c,1,0,0);
+	_int80(1,1,&c,1,0,0);
 }
