@@ -47,13 +47,11 @@ _int80:
 	;mov rsi,rdx
 	;mov rdx,rcx
 	;r8 y r9 ya estan con sus valores
-    int 22h
-    mov rax,5h
-    ret
+    int 80h
     
 	;popRegisters
 	;mov rsp,rbp
 	;pop rbp
-	;ret
+	ret
 
 
