@@ -1,6 +1,11 @@
 #ifndef _VIDEO_DRIVER_H_
 #define _VIDEO_DRIVER_H_
 
+#define RED_MASK 0x00FF0000
+#define GREEN_MASK 0x00FF00
+#define BLUE_MASK 0x0000FF
+
+
 typedef struct Color {
 	uint8_t blue;
 	uint8_t green;
@@ -26,6 +31,11 @@ void draw_verticalTotalLine(int x);
 void draw_verticalLine(int x, int y0, int y1);
 void draw_horizontalLine(int x0, int x1, int y);
 void setBackgroundColor(Color color);
+void draw_Line(int x1, int y1, int x2,int y2);
 void cls();
-
+void drawFunction(int a, int b, int c);
+int getScreenHeigth(void);
+int getScreenWidth(void);
+void draw_char_position(uint8_t l, int x, int y);
+Color hexaToColor(uint64_t color);
 #endif

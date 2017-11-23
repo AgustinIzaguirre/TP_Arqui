@@ -2,17 +2,17 @@ include ../Makefile.inc
 
 MODULE=0000-sampleCodeModule.bin
 SOURCES=$(wildcard [^_]*.c)
-#USRSOURCES = nombre.asm
-#USEROBJECT =nombre.o
+USRSOURCES=systemCaller.asm
+USROBJECT=systemCaller.o
 
 all: $(MODULE)
 
-$(MODULE): $(SOURCES) $(USRSOURCES)
-	$(GCC) $(GCCFLAGS) -T sampleCodeModule.ld _loader.c $(SOURCES) -o ../$(MODULE)
-	#$(GCC) $(GCCFLAGS) -I./include -T sampleCodeModule.ld _loader.c $(SOURCES) $(USEROBJECT) -o ../$(MODULE)
+$(MODULE): $(SOURCES) $(USROBJECT)
+	$(GCC) $(GCCFLAGS) -I./include -T sampleCodeModule.ld _loader.c $(SOURCES) $(USROBJECT) -o ../$(MODULE)
 
-#$(USEROBJECT): 
-#	$(ASM) $(ASMFLAGS) $(USRSOURCES) -o $(USEROBJECT)
+$(USROBJECT):
+	$(ASM) $(ASMFLAGS) ./asm/$(USRSOURCES) -o $(USROBJECT)
+
 clean:
 	rm -rf *.o
 

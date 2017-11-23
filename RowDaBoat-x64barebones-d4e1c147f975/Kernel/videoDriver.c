@@ -57,6 +57,26 @@ void set_up_VESA_mode();
       pointer.x += CHAR_WIDTH;
    }
 
+      void draw_char_position(uint8_t l, int x, int y){
+      char * letter = pixel_map(l);
+      int i,j;
+      Color white = {0xFF,0xFF,0xFF};
+      Color black = {0,0,0};
+      if(x + CHAR_WIDTH - 1 >= mode_info->width) {
+         y+=CHAR_HEIGHT;
+         x = 0;
+      }
+      for(i = 0; i<CHAR_HEIGHT;i++) {
+         for(j = 0; j<CHAR_WIDTH; j++) {
+            if(1<<j & letter[i])
+               draw_pixel_with_color(CHAR_WIDTH-1-j+x,i+y,white);
+            else
+               draw_pixel_with_color(CHAR_WIDTH-1-j+x,i+y,black);   
+         }
+      }
+      x += CHAR_WIDTH;     
+   }
+
    void draw_char_with_color(uint8_t l, int x, int y,Color letter_color, Color background_color) {
       char * letter = pixel_map(l);
       int i,j;
@@ -143,3 +163,67 @@ void cls(){
          }
       }
    }
+
+   void drawFunction(int a, int b, int c){
+      int height= mode_info->height;
+      int width = mode_info->width;
+      drawAxis();
+      double x=0;
+      double y=0;
+      double scale=0.01;
+      for (int p=-500;p<500;p++){
+         x=p*scale;
+         y=a*x*x+b*x+c;
+         y*= 100;
+         draw_pixel(width/2 + p, height/2-y);
+      }
+   }
+
+   void drawAxis(){
+      int height= getScreenHeigth();
+      int width = getScreenWidth();
+      int x0=width/2;
+      draw_verticalTotalLine(x0);
+      int y0=height/2;
+      draw_horizontalTotalLine(y0);
+      draw_char_position('1',width/2+100,height/2 +CHAR_HEIGHT);
+      draw_char_position('2',width/2+200,height/2 +CHAR_HEIGHT);
+      draw_char_position('3',width/2+300,height/2 +CHAR_HEIGHT);
+      draw_char_position('4',width/2+400,height/2 +CHAR_HEIGHT);
+      draw_char_position('5',width/2+500,height/2 +CHAR_HEIGHT);
+      draw_char_position('1',width/2-100,height/2 +CHAR_HEIGHT);
+      draw_char_position('2',width/2-200,height/2 +CHAR_HEIGHT);
+      draw_char_position('3',width/2-300,height/2 +CHAR_HEIGHT);
+      draw_char_position('4',width/2-400,height/2 +CHAR_HEIGHT);
+      draw_char_position('5',width/2-500,height/2 +CHAR_HEIGHT);
+      draw_char_position('1',width/2-CHAR_WIDTH,height/2 -100);
+      draw_char_position('2',width/2-CHAR_WIDTH,height/2 -200);
+      draw_char_position('3',width/2-CHAR_WIDTH,height/2 -300);
+      draw_char_position('4',width/2-CHAR_WIDTH,height/2 -400);
+      draw_char_position('5',width/2-CHAR_WIDTH,height/2 -500); 
+      draw_char_position('1',width/2-CHAR_WIDTH,height/2 +100);
+      draw_char_position('2',width/2-CHAR_WIDTH,height/2 +200);
+      draw_char_position('3',width/2-CHAR_WIDTH,height/2 +300);
+      draw_char_position('4',width/2-CHAR_WIDTH,height/2 +400);
+      draw_char_position('5',width/2-CHAR_WIDTH,height/2 +500);
+   }
+   
+    int getScreenHeigth(){
+      return mode_info->height;
+   }
+
+
+   int getScreenWidth(){
+      return mode_info->width;
+   }
+
+   
+   Color hexaToColor(uint64_t color){
+      Color c = {.red = (color & RED_MASK) >>16, .green = (color & GREEN_MASK) >> 8, .blue = color & BLUE_MASK};
+      return c;
+   }
+
+   uint64_t ColorToHexa(Color color){
+      uint64_t hexColor= color.red<<16|color.green<<8|color.blue;
+      return hexColor;
+   }  

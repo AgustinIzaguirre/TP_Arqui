@@ -16,8 +16,15 @@ uint32_t getYear(void);
 uint8_t getMonth(void);
 uint8_t getDay(void);
 
-uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx) {
+uint64_t sys_paint(uint64_t x, uint64_t y, uint64_t color, uint64_t r8,uint64_t r9);
+uint64_t sys_clear(void);
+uint64_t sys_writeChar(uint64_t fd,uint64_t buffer, uint64_t count, uint64_t x, uint64_t y);
+uint64_t sys_getScreenInfo(uint64_t rdi);
+
+
+uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t r8, uint64_t r9) {
 		uint64_t result;
+		draw_word("Entro en el dispatcher",0,0);
 		switch(rax) {
 			// case 0:
 			// 	return sys_read(rdi,rsi,rdx);
@@ -41,6 +48,18 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 				break;
 			case 7:
 				result =  sys_day();
+				break;
+			case 8:
+				result =  sys_paint(rdi,rsi,rdx,r8,r9);
+				break;
+			case 9:
+				result =  sys_clear();
+				break;
+			case 10:
+				result =  sys_writeChar(rdi,rsi,rdx,r8,r9);
+				break;
+			case 11:
+				result =  sys_getScreenInfo(rdi);
 				break;
 		}
 
@@ -89,6 +108,38 @@ uint8_t sys_day(){
 	return day;
 }
 
+//
+uint64_t sys_paint(uint64_t x, uint64_t y, uint64_t color, uint64_t r8,uint64_t r9){
+	Color c=hexaToColor(color);
+	draw_pixel_with_color(x,y,c);
+	return 0;
+}
+
+
+uint64_t sys_clear(){
+	cls();
+	return 0;
+}
+
+// uint64_t sys_read(uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8,uint64_t r9){
+// 	return 0;
+// }
+uint64_t sys_writeChar(uint64_t fd,uint64_t buffer, uint64_t count, uint64_t x, uint64_t y){
+	int i=0;
+	char *charbuffer=(char*)buffer;
+	draw_char_position(charbuffer[0], x, y);
+	return 0;
+}
+
+uint64_t sys_getScreenInfo(uint64_t rdi){
+	switch(rdi){
+		case 0:
+			return getScreenWidth();
+		case 1:
+			return getScreenHeigth();
+	}
+	return 0;
+}//
 
 // uint64_t sys_read(unsigned int fd, const char* buffer, uint64_t count) {
 // 	int i = 0;

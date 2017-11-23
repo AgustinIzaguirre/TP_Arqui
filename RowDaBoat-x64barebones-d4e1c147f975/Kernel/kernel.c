@@ -82,14 +82,40 @@ void * initializeKernelBinary()
 	ncPrint("[Done]");
 	ncNewline();
 	ncNewline();
+
+	int a = ((EntryPoint)sampleCodeModuleAddress)();
+	char frase[2] = {a+48,0};
+	draw_word(frase,0,0);
+	draw_word("Salio de sampleModuleAddress",100,0);
+
 	return getStackBase();
 }
+
+int int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
 
 int main()
 {	
 
 	load_idt();
-	callWrite();
+	char * frase = "hola como va";
+	
+ 	char hora[2] = {0};
+ 	int horas = int80(4,0,0,0,0,0);
+ 	hora[1] = horas%10 + 48;
+ 	hora[0] = horas/10 + 48;
+ 	int80(1,0,hora,2,0,0);
+ // int height= 500;
+ //    int width = 500;
+ //    double x=0;
+ //    double y=0;
+ //    double scale=0.01;
+ //    for (int p=-500;p<500;p++){
+ //      x=p*scale;
+ //      y=1*x*x+0*x+0;
+ //      y*= 100;
+ //      int80(8,width/2 + p,height/2-y,0,0,0);
+ //    }
+	//callWrite();
 	//draw_horizontalTotalLine(100);
 	//syscallsTest();
 	// // ncPrint("[Kernel Main]");
