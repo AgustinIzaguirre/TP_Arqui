@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <plotter.h>
 #include <stdarg.h>
-extern uint64_t int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9);
+extern uint64_t _int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9);
 
 int isAlpha(char c){
 	return ((c>='A' && c<='Z') || (c>='a' && c<='z'));
@@ -110,5 +110,5 @@ void printf(const char * str,...){
 }
 
 void putchar(const char c){
-	int80(3,1,c,1,0,0);
+	_int80(3,1,c,1,0,0);
 }

@@ -2,15 +2,15 @@
 #include <stdint.h>
 #include <stdlib.h>
 // #include <types.h>
-extern uint64_t int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9);
+extern uint64_t _int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9);
   
 	void draw_pixel_with_color(int x, int y,Color color){
       	uint64_t c=ColorToHexa(color);
-        int80(8,x,y,c,0,0);//llamar a la SysCall que corresponde a pintar el pixel;
+        _int80(8,x,y,c,0,0);//llamar a la SysCall que corresponde a pintar el pixel;
 	}
 
 	void draw_pixel(int x, int y){
-    	int80(8,x,y,0,0,0);//llamar a la Syscall que corresponde al pixel
+    	_int80(8,x,y,0,0,0);//llamar a la Syscall que corresponde al pixel
   }
 
   void draw_horizontalLine(int x0, int x1, int y){
@@ -86,15 +86,15 @@ extern uint64_t int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, ui
  	}
     
   void cls(){
-     	int80(9,0,0,0,0,0);
+     	_int80(9,0,0,0,0,0);
  	}
 
   uint64_t getScreenWidht(){
-    return int80(11,0,0,0,0,0);
+    return _int80(11,0,0,0,0,0);
   }
 
   uint64_t getScreenHeight(){
-    return int80(11,1,0,0,0,0);
+    return _int80(11,1,0,0,0,0);
   }
 
 

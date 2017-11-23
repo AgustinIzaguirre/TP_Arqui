@@ -1,5 +1,5 @@
 section .text
-GLOBAL int80
+GLOBAL _int80
 %macro pushRegisters 0
 	push rbx
 	push rcx
@@ -33,7 +33,7 @@ GLOBAL int80
 	pop rbx
 %endmacro
 
-int80:
+_int80:
     
     ;push rbp
     ;mov rbp,rsp
@@ -47,11 +47,14 @@ int80:
 	;mov rsi,rdx
 	;mov rdx,rcx
 	;r8 y r9 ya estan con sus valores
+    
     int 80h
-
+	mov rax,4h
+    ret
+    
 	;popRegisters
 	;mov rsp,rbp
 	;pop rbp
-	ret
+	;ret
 
 

@@ -62,6 +62,8 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 				result =  sys_getScreenInfo(rdi);
 				break;
 		}
+		// char c = rax;
+		// int80(1,0,&c,1,0,0);
 
 		return result;
 }

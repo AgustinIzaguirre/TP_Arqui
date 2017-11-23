@@ -82,6 +82,7 @@ void * initializeKernelBinary()
 	ncPrint("[Done]");
 	ncNewline();
 	ncNewline();
+	load_idt();
 
 	int a = ((EntryPoint)sampleCodeModuleAddress)();
 	char frase[2] = {a+48,0};
@@ -91,19 +92,19 @@ void * initializeKernelBinary()
 	return getStackBase();
 }
 
-int int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
+int _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
 
 int main()
 {	
 
-	load_idt();
-	char * frase = "hola como va";
+	// char * frase = "hola como va";
 	
- 	char hora[2] = {0};
- 	int horas = int80(4,0,0,0,0,0);
- 	hora[1] = horas%10 + 48;
- 	hora[0] = horas/10 + 48;
- 	int80(1,0,hora,2,0,0);
+ // 	char hora[2] = {0};
+ // 	int horas = int80(4,0,0,0,0,0);
+ // 	hora[1] = horas%10 + 48;
+ // 	hora[0] = horas/10 + 48;
+ // 	int80(1,0,hora,2,0,0);
+
  // int height= 500;
  //    int width = 500;
  //    double x=0;

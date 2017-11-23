@@ -5,9 +5,12 @@ char * v = (char*)0xB8000 + 79 * 2;
 
 static int var1 = 0;
 static int var2 = 0;
-int int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
+int _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
+extern char bss;
+extern char endOfBinary;
 
 int main() {
+	memset(&bss,0,&endOfBinary - &bss);
 	// char * frase = "hola como va";
 	// int80(1,0,frase,5,0,0);
 
@@ -15,11 +18,11 @@ int main() {
 	char * frase = "hola como va";
 	
  	char hora[2] = {0};
- 	int horas = int80(4,0,0,0,0,0);
+ 	int horas = _int80(4,0,0,0,0,0);
  	hora[1] = horas%10 + 48;
  	hora[0] = horas/10 + 48;
- 	int80(1,0,hora,2,0,0);
-	return 9;
+ 	return _int80(1,0,hora,2,0,0);
+	//return 9;
 	//drawFunction(1,0,0);
 	// for(int i =0 ; i <200; i++) {
 	// 	draw
