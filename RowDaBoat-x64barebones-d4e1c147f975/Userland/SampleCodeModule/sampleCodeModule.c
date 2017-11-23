@@ -6,13 +6,17 @@ char * v = (char*)0xB8000 + 79 * 2;
 static int var1 = 0;
 static int var2 = 0;
 int _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
-extern char bss;
-extern char endOfBinary;
+// extern char bss;
+// extern char endOfBinary;
 
 int main() {
-	memset(&bss,0,&endOfBinary - &bss);
-	printf("Hola como va\n");
-	printf("tengo %d anos.",22);
+	// memset(&bss,0,&endOfBinary - &bss);
+	//printf("Hola como va\n");
+	//printf("tengo %d anos.",22);
+	char c = getchar();
+	putchar('\n');
+	putchar(c);
+	
 	// char * frase = "hola como va";
 	// int80(1,0,frase,5,0,0);
 

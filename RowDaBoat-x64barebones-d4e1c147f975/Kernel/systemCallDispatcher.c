@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <videoDriver.h>
 
+uint64_t sys_read(uint64_t fd, char* destination, uint64_t count);
 uint64_t sys_write(unsigned int fd, const char* buffer, uint64_t count);
 uint8_t sys_seconds(void);
 uint8_t sys_mins(void);
@@ -26,8 +27,8 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 		uint64_t result;
 		//draw_word("Entro en el dispatcher",0,0);
 		switch(rax) {
-			// case 0:
-			// 	return sys_read(rdi,rsi,rdx);
+			case 0:
+				result =sys_read(rdi,rsi,rdx);
 			case 1:
 				 result = sys_write(rdi,rsi,rdx);
 				 break;
@@ -66,16 +67,34 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 		return result;
 }
 
+uint64_t sys_read(uint64_t fd, char* destination, uint64_t count){
+	
+	uint64_t i = 0;
+	int c = 0;
+    if (fd == 0) {
+		while (i < count) {
+			c = getChar();
+			if(c != -1){
+				destination[i] = c;
+				i++;
+			}
+		}
+    }
+    return i;
+}
+
 uint64_t sys_write(unsigned int fd, const char* buffer, uint64_t count) {
 	int i = 0;
-	while(i<count){
-		if(buffer[i] == '\n')
-			newLine();
-		else
-			draw_char(buffer[i]);
-		i++;
+	if(fd == 1){
+		while(i<count){
+			if(buffer[i] == '\n')
+				newLine();
+			else
+				draw_char(buffer[i]);
+			i++;
+		}
 	}
-	return count;
+	return i;
 }
 
 uint8_t sys_seconds(){
@@ -124,9 +143,7 @@ uint64_t sys_clear(){
 	return 0;
 }
 
-// uint64_t sys_read(uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8,uint64_t r9){
-// 	return 0;
-// }
+
 uint64_t sys_writeChar(uint64_t fd,uint64_t buffer, uint64_t count, uint64_t x, uint64_t y){
 	int i=0;
 	char *charbuffer=(char*)buffer;

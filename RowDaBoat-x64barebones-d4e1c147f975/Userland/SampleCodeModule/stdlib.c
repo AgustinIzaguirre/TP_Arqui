@@ -112,3 +112,63 @@ void printf(const char * str,...){
 void putchar(const char c){
 	_int80(1,1,&c,1,0,0);
 }
+
+
+int getchar() {
+	char c;
+	_int80(0,0,&c,1,0,0);
+	return c;
+}
+
+// /*
+// ** Lee una línea de entrada estándar de longitud como mucho maxlen y la guarda en str.
+// */
+// int readline(char *str, unsigned int maxlen) {
+//     unsigned int i;
+//     int c;
+//     for (i = 0; i < maxlen-1 && (c = getchar()) != '\n'; i++) 
+// 			str[i] = c;
+//     str[i] = '\0';
+//     return i;
+// }
+
+// int scanf(const char *format, ...) {
+// 	int i, j, num;
+// 	int argc = 0;
+// 	int *p;
+// 	char *str;
+// 	char aux[BUFFER_SIZE];
+// 	va_list args;
+// 	va_start(args, format);
+
+// 	readline(aux, BUFFER_SIZE);
+
+// 	for (i = j = 0; aux[j] != '\0' && format[i] != '\0'; i++, j++) {
+// 		if (format[i] == '%') {
+// 			i++;
+// 			if (format[i] == 'd') {
+// 				if(aux[j] != '+' && aux[j] != '-' && !isdigit(aux[j]))
+// 					return argc;
+// 				num = atoi(aux + j);
+// 				p = va_arg(args, int *);
+// 				*p = num;
+// 				while (isdigit(aux[j+1]))
+// 					j++;
+// 			}
+// 			else if (format[i] == 's') {
+// 				str = va_arg(args, char *);
+// 				strcpy(str, aux+j);
+// 				return argc+1;
+// 			}
+// 			else if (format[i] == '%' && aux[j++] != '%')
+// 				return argc;
+// 			argc++;
+// 		} 
+// 		else if (format[i] != aux[j])
+// 			return argc;
+// 	}
+
+// 	va_end(args);
+// 	return argc;
+// }
+

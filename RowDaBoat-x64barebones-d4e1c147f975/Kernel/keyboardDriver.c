@@ -6,13 +6,19 @@
 
 int isAlpha(char);
 
-
 static uint8_t status = 0;
+uint8_t buffer[256];
+uint16_t index = 0;
+uint16_t read = 0;
 
 void keyboard_handler() {
 	char l = getKey();
+
 	if(l >0) {
 		if(kbdus[l]) {
+			buffer[index] = kbdus[l];
+			incrementIndex();
+
 			if(status & 1<<SHIFT){
 				draw_char(shiftedkey[l]);
 			}
@@ -45,5 +51,25 @@ void keyboard_handler() {
 	}
 }
 
+void incrementIndex(){
+	if((index + 1 %256) != read) {
+		index ++;
+		index = index%256;
+	}
+}
 
+void incrementRead(){
+	if(read != index){
+		read ++;
+		read = read % 256;
+	}
+}
 
+int getChar() {
+	_sti();
+	if(read == index)
+		return -1;
+	int c = buffer[read];
+	incrementRead();
+	return c;
+}
