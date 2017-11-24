@@ -65,7 +65,17 @@ int strcpy(char *from, char *to){
 	for (i=0;from[i]!='\0';i++){
 		to[i]=from[i];
 	}
+	to[i] = 0;
 	return i;
+}
+
+int strcmp(char * array1, char * array2) {
+	int i=0;
+	for (i=0;array2[i]!='\0';i++){
+		if(array1[i]!=array2[i])
+			return 0;
+	}
+	return array1[i] == array2[i];
 }
 
 void printf(const char * str,...){

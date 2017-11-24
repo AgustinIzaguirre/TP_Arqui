@@ -51,9 +51,16 @@ void set_up_VESA_mode();
       Color white = {0xFF,0xFF,0xFF};
       Color black = {0,0,0};
       if(pointer.x + CHAR_WIDTH - 1 >= mode_info->width) {
-         pointer.y+=CHAR_HEIGHT;
-         pointer.x = 0;
          lastEnter = mode_info->width-1;
+         if(pointer.y +CHAR_HEIGHT >= mode_info->height) {
+            scrollUp();
+            pointer.y = mode_info->height - CHAR_HEIGHT;
+         }
+         else {
+            pointer.y+=CHAR_HEIGHT;
+         }
+         pointer.x = 0;
+         
       }
       for(i = 0; i<CHAR_HEIGHT;i++) {
          for(j = 0; j<CHAR_WIDTH; j++) {
@@ -115,7 +122,6 @@ void set_up_VESA_mode();
       if(pointer.x == 0){
          if(pointer.y != 0) {
             pointer.y = pointer.y - CHAR_HEIGHT;
-            //pointer.x = mode_info->width - CHAR_WIDTH;
             pointer.x = lastEnter - CHAR_WIDTH;
             lastEnter = mode_info->width;
          }
@@ -140,6 +146,7 @@ void set_up_VESA_mode();
    }
 
    void scrollUp(){
+      //_cli();
       int i;
       static int quantity = 0;
       int from = mode_info->height - (3+quantity)*CHAR_HEIGHT;
@@ -151,6 +158,7 @@ void set_up_VESA_mode();
       }
       eraseLine(pointer.y);
       quantity++;
+      //_sti();
    }
 
    void eraseLine(int y){

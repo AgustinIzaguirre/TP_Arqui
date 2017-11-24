@@ -38,10 +38,15 @@ void keyboard_handler() {
 					status = status | 1<<CAPSLOCK;		
 			}
 			else if(l == BACKSPACECODE) {
+				buffer[index] = '\b';
+				incrementIndex();
 				erase_char();
 			}
-			else if(l == NEWLINECODE)
+			else if(l == NEWLINECODE){
+				buffer[index] = '\n';
+				incrementIndex();
 				newLine();
+			}
 		}	
 	}
 	else {
