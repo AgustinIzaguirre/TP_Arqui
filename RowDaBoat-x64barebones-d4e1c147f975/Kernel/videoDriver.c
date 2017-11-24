@@ -10,9 +10,10 @@ void set_up_VESA_mode();
    MODE_INFO * mode_info = (MODE_INFO*)0x0000000000005C00;
    Pointer pointer = {0,0};
    Color background_color= {0,0,0};
+   int lastEnter = -1;
 
    void set_up_VESA_mode(){
-   	int i,j;
+   	
       //draw_char('a');     
       //draw_word("Alejo gilun",0,0);
       //draw_word("Alan gilun a ver que mas puedo decir a ver como queda en la pantalla",0,0);
@@ -20,7 +21,14 @@ void set_up_VESA_mode();
 
    }
 
-    void draw_pixel(int x, int y){
+   void setPointer(int xvalue, int yvalue) {
+      if(xvalue >= 0 && xvalue< mode_info->width && yvalue >= 0 && yvalue< mode_info->height) {
+         pointer.x = xvalue;
+         pointer.y = yvalue;
+      }
+   }
+
+   void draw_pixel(int x, int y){
 
       uint8_t * vi =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *y + mode_info->bpp/8*x);
       vi[0] = 0xFF;
@@ -45,6 +53,7 @@ void set_up_VESA_mode();
       if(pointer.x + CHAR_WIDTH - 1 >= mode_info->width) {
          pointer.y+=CHAR_HEIGHT;
          pointer.x = 0;
+         lastEnter = mode_info->width-1;
       }
       for(i = 0; i<CHAR_HEIGHT;i++) {
          for(j = 0; j<CHAR_WIDTH; j++) {
@@ -106,7 +115,9 @@ void set_up_VESA_mode();
       if(pointer.x == 0){
          if(pointer.y != 0) {
             pointer.y = pointer.y - CHAR_HEIGHT;
-            pointer.x = mode_info->width - CHAR_WIDTH;
+            //pointer.x = mode_info->width - CHAR_WIDTH;
+            pointer.x = lastEnter - CHAR_WIDTH;
+            lastEnter = mode_info->width;
          }
          else
             return;
@@ -118,9 +129,54 @@ void set_up_VESA_mode();
    }
 
    void newLine(){
-      pointer.y = pointer.y + CHAR_HEIGHT;
+      lastEnter = pointer.x;
+     if(pointer.y = mode_info->height - CHAR_HEIGHT){
+        scrollUp();
+        pointer.y = mode_info->height - CHAR_HEIGHT;
+     }
+     else
+         pointer.y = pointer.y + CHAR_HEIGHT;
       pointer.x = 0;
    }
+
+   void scrollUp(){
+      int i;
+      static int quantity = 0;
+      int from = mode_info->height - (3+quantity)*CHAR_HEIGHT;
+      if(from < 0) {
+         from = 0;
+      }
+      for(i = from; i<pointer.y; i+=CHAR_HEIGHT){
+         copyLine(i,i+CHAR_HEIGHT);
+      }
+      eraseLine(pointer.y);
+      quantity++;
+   }
+
+   void eraseLine(int y){
+      int i,limit = mode_info->bpp * mode_info->width/CHAR_WIDTH;
+      for(i = 0; i<= limit;i++){
+         draw_char_with_color(' ',i,y,background_color,background_color);
+      }
+
+   }
+
+   void copyLine(int to, int from){
+      uint8_t * v1 =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *to);
+      uint8_t * v2 =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *from);
+      int x,y;
+      for(y=0;y<4*CHAR_HEIGHT;y++) { //probamos hasta que con 4 dio
+         for(x = 0 ; x < mode_info->width; x++){
+            v1[0] = v2[0];
+            v1[1] = v1[1];
+            v2[2] = v2[2];
+
+            v1+=1;
+            v2+=1;
+         }
+      }
+   }
+
 
 
    //

@@ -21,6 +21,7 @@ uint64_t sys_paint(uint64_t x, uint64_t y, uint64_t color, uint64_t r8,uint64_t 
 uint64_t sys_clear(void);
 uint64_t sys_writeChar(uint64_t fd,uint64_t buffer, uint64_t count, uint64_t x, uint64_t y);
 uint64_t sys_getScreenInfo(uint64_t rdi);
+uint64_t sys_setPointer(uint64_t x, uint64_t y);
 
 
 uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t r8, uint64_t r9) {
@@ -62,6 +63,9 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 			case 11:
 				result =  sys_getScreenInfo(rdi);
 				break;
+			case 12:
+				result =  sys_setPointer(rdi,rsi);
+				break;	
 		}
 		
 		return result;
@@ -159,7 +163,13 @@ uint64_t sys_getScreenInfo(uint64_t rdi){
 			return getScreenHeigth();
 	}
 	return 0;
-}//
+}
+
+uint64_t sys_setPointer(uint64_t x, uint64_t y) {
+	setPointer(x,y);
+	return 0;
+}
+//
 
 // uint64_t sys_read(unsigned int fd, const char* buffer, uint64_t count) {
 // 	int i = 0;

@@ -24,7 +24,11 @@ void draw_word(char * word,int x, int y);
 void draw_char_with_color(uint8_t l, int x, int y,Color letter_color, Color background_color);
 void erase_char();
 void newLine();
+void setPointer(int x, int y);
 
+void scrollUp(void);
+void eraseLine(int y);
+void copyLine(int to, int from);
 //
 void draw_horizontalTotalLine(int y);
 void draw_verticalTotalLine(int x);

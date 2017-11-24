@@ -1,16 +1,14 @@
 /* sampleCodeModule.c */
 #include <stdlib.h>
-#include <shell.h>
-#include <time.h>]
 
 int main() {
 	shell();
-	char c = getchar();
-	putchar('\n');
-	putchar(c);
-	time();
-	date();
-	echo("hola como va");	
+	// char c = getchar();
+	// putchar('\n');
+	// putchar(c);
+	// time();
+	// date();
+	// echo("hola como va");	
 	
 	return 10;
 }
