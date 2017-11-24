@@ -132,6 +132,84 @@ int getchar() {
 //     return i;
 // }
 
+// int scanf(const char* str, ...){
+// 	va_list args;
+// 	va_start(args,c);
+
+// 	int ret = 0;
+// 	int flag = 0;
+// 	int i = 0;
+// 	char buffer[MAX];
+// 	int j = 0;
+// 	char currentChar;
+
+// 	while((currentChar = getchar()) != '\n'){
+// 		if(currentChar == '\b'){
+// 			if(j>0){
+// 				buffer[--j] = 0;
+// 				printf("\b");
+// 			}
+// 		}else{
+// 			if(j < MAX){
+// 				buffer[j++]	= currentChar;
+// 				putChar(currentChar);
+// 			}
+// 		}
+// 	}
+// 	buffer[j] = 0;
+// 	j = 0;
+
+// 	while(c[i]!=0&&ret>=0){
+// 		switch(c[i]) {
+// 			case '%':
+// 				if(flag) {
+// 					if(buffer[j]!='%')
+// 						ret = -1;
+// 					else
+// 						j++;
+// 				} else {
+// 					flag = 1;
+// 				}
+// 				break;
+// 			case 'd':
+// 				if(flag){
+// 					if(getNumber(va_arg(args,int*),buffer,&j))
+// 						ret++;
+// 					else
+// 						ret = -1;
+// 					flag = 0;
+// 				} else {
+// 					if(buffer[j]!='d')
+// 						ret = -1;
+// 					else
+// 						j++;
+// 				}
+// 				break;
+// 			case 's':
+// 			if(flag){
+// 					j += copyString(buffer+j,va_arg(args,char*));
+// 					ret++;
+// 					flag = 0;
+// 				} else {
+// 					if(buffer[j]!='s')
+// 						ret = -1;
+// 					else
+// 						j++;
+// 				}
+// 				break;
+// 			default:
+// 				if(buffer[j]!=c[i])
+// 					ret = -1;
+// 				else
+// 					j++;
+// 		}
+// 		i++;
+// 	}
+// 	printf("\n");
+// 	va_end(args);
+// 	return ret;
+// }
+
 // int scanf(const char *format, ...) {
 // 	int i, j, num;
 // 	int argc = 0;

@@ -49,12 +49,10 @@ _int80:
 	;r8 y r9 ya estan con sus valores
     
     int 80h
-	mov rax,4h
-    ret
-    
+	
 	;popRegisters
 	;mov rsp,rbp
 	;pop rbp
-	;ret
+	ret
 
 
