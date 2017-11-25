@@ -7,6 +7,7 @@
 #include <time.h>
 #include <clear.h>
 #include <help.h>
+#include <color.h>
 
 uint64_t _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
 
@@ -41,6 +42,8 @@ void shell(){
 				case LINEAR:  functionScreen(0,functionArgs[0],functionArgs[1]);
 						break;
 				case QUADRATIC: functionScreen(functionArgs[0],functionArgs[1],functionArgs[2]);
+						break;
+				case COLOR:  color(functionArgs[0],functionArgs[1],functionArgs[2]);
 						break;
 			}
 		}
@@ -116,6 +119,12 @@ int getCommands(){
 			 	return COMMANDS_QUANTITY;
 			return QUADRATIC;
 		}
+		else if(strcmp(command,"color")){
+			if(getInts(MAX_COLOR_INTS) != MAX_COLOR_INTS || !valid(0,256,MAX_COLOR_INTS))
+				return COMMANDS_QUANTITY;
+			//printf("b = %d, g = %d")
+			return COLOR;
+		}
 
 	}
 	return COMMANDS_QUANTITY;
@@ -180,4 +189,13 @@ void functionScreen(int a, int b, int c) {
 	while((l = getchar())!='q');
 	clear();
 	setUpShell();
+}
+
+int valid(int from,int to,int size){
+	int i;
+	for(i=0; i <size; i++){
+		if(functionArgs[i] < from || functionArgs[i] > to)
+			return 0;
+	}
+	return 1;
 }

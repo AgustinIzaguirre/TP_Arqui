@@ -22,7 +22,7 @@ uint64_t sys_clear(void);
 uint64_t sys_drawCharPosition(uint64_t l,uint64_t x, uint64_t y);
 uint64_t sys_getScreenInfo(uint64_t rdi);
 uint64_t sys_setPointer(uint64_t x, uint64_t y);
-
+uint64_t sys_ChangeColor(uint64_t blue,uint64_t green,uint64_t red);
 
 uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t r8, uint64_t r9) {
 		uint64_t result;
@@ -65,7 +65,10 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 				break;
 			case 12:
 				result =  sys_setPointer(rdi,rsi);
-				break;	
+				break;
+			case 13:
+				result = sys_ChangeColor(rdi,rsi,rdx);
+				break;
 		}
 		
 		return result;
@@ -164,5 +167,10 @@ uint64_t sys_getScreenInfo(uint64_t rdi){
 
 uint64_t sys_setPointer(uint64_t x, uint64_t y) {
 	setPointer(x,y);
+	return 0;
+}
+
+uint64_t sys_ChangeColor(uint64_t blue,uint64_t green,uint64_t red){
+	setFontColor(blue,green,red);
 	return 0;
 }
