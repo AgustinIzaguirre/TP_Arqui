@@ -38,7 +38,7 @@ void shell(){
 					break;
 				case ECHO: echo(args);
 					break;
-				case LINEAR: functionScreen(0,functionArgs[0],functionArgs[1]);
+				case LINEAR:  functionScreen(0,functionArgs[0],functionArgs[1]);
 						break;
 				case QUADRATIC: functionScreen(functionArgs[0],functionArgs[1],functionArgs[2]);
 						break;
@@ -152,7 +152,7 @@ int getInts(int totalArgs) {
 		}
 		else if(isNum(args[i])){
 			if(j < totalArgs){
-				functionArgs[j] = -sign* getNumber(args,&i);
+				functionArgs[j] = (sign==1)? -getNumber(args,&i) : getNumber(args,&i);
 				j++;
 			}
 			else

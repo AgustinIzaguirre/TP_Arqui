@@ -103,6 +103,21 @@ extern uint64_t _int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, u
       }
    }
 
+   // void drawFunction(int a, int b, int c){
+   //    int height= mode_info->height;
+   //    int width = mode_info->width;
+   //    drawAxis();
+   //    double x=0;
+   //    double y=0;
+   //    double scale=0.01;
+   //    for (int p=-500;p<500;p++){
+   //       x=p*scale;
+   //       y=a*x*x+b*x+c;
+   //       y*= 100;
+   //       draw_pixel(width/2 + p, height/2-y);
+   //    }
+   // }
+
    void drawAxis(){
       int height= (int)getScreenHeight();
       int width = (int)getScreenWidht();
