@@ -171,17 +171,6 @@ void set_up_VESA_mode();
 
    }
 
-   void cls() {
-      int i , limit = mode_info->height/CHAR_HEIGHT;
-      pointer.x = 0;
-      pointer.y = 0;
-      while(pointer.y < mode_info->height) {
-         while(pointer.x < mode_info->width) {
-            draw_char(' ');
-         }
-      }
-   }
-
    void copyLine(int to, int from){
       uint8_t * v1 =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *to);
       uint8_t * v2 =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *from);
@@ -222,24 +211,24 @@ void set_up_VESA_mode();
       draw_horizontalLine(0,mode_info->width,y);
    }
 
-// void cls(){
-//       Color c;
-//       c.red=0;
-//       c.green=0;
-//       c.blue=0;
-//       pointer.x=0;
-//       pointer.y=0;
-//       setBackgroundColor(background_color);
-//    }
+void cls(){
+      Color c;
+      c.red=0;
+      c.green=0;
+      c.blue=0;
+      pointer.x=0;
+      pointer.y=0;
+      setBackgroundColor(background_color);
+   }
 
-   // void setBackgroundColor(Color color){
-   //    background_color = color;
-   //    for (int x=0; x<mode_info->height;x++){
-   //       for (int y=0;y<mode_info->width;y++){
-   //          draw_pixel_with_color(x,y, color);
-   //       }
-   //    }
-   // }
+   void setBackgroundColor(Color color){
+      background_color = color;
+      for (int y=0; y<mode_info->height;y++){
+         for (int x=0;x<mode_info->width;x++){
+            draw_pixel_with_color(x,y, color);
+         }
+      }
+   }
 
    void drawFunction(int a, int b, int c){
       int height= mode_info->height;

@@ -163,6 +163,6 @@ int main()
 	// ncPrint("Termino");
 	// ncNewline();
 	//set_up_VESA_mode();
-	while(1);
+	//while(1);
 	return 0;
 }

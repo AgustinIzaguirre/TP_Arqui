@@ -9,10 +9,15 @@
 #include <help.h>
 
 uint64_t _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
+
+char command [COMMAND_MAX_LENGTH];
+char args[COMMANDS_MAX_ARGS+1];
+int functionArgs[MAX_QUADRATIC_INTS];
 int width = 0;
 int height = 0;
+
 void shell(){
-	//draw_horizontalLine(0, 400, 100);
+	//drawFunction(2,0,0);
 	setUpShell();
 	int command; 
 
@@ -26,17 +31,20 @@ void shell(){
 					break;
 				case DATE: date();
 					break;
-				case CLEAR: clear(); 
+				case CLEAR: clear();
+							setUpShell(); 
 					break;
 				case HELP: help();
 					break;
-					//echo, cuadratic
+				case ECHO: echo(args);
+					break;
+				case LINEAR: functionScreen(0,functionArgs[0],functionArgs[1]);
+						break;
+				case QUADRATIC: functionScreen(functionArgs[0],functionArgs[1],functionArgs[2]);
+						break;
 			}
 		}
 	}
-
-	//printPrompt();
-	//printf("height = %d\nwidth = %d\n",height,width);
 }
 
 void setUpShell() {
@@ -52,9 +60,8 @@ void printPrompt(){
 int getCommands(){
 	printPrompt();
 	int c;
-	char command [COMMAND_MAX_LENGTH];
 	int i = 0;
-	while((c = getchar())!='\n') {
+	while((c = getchar())!='\n' && (i==0 || c!=' ')) {
 		if(c!='\b')
 			putchar(c);
 		if(i!=0 || c != ' ') {
@@ -69,24 +76,108 @@ int getCommands(){
 		}
 	}
 
+	if(c == ' '){
+		putchar(c);
+		readArgs(args);
+	}
+	else {
+		args[0]=0;
+	}
+
 	if(i<COMMAND_MAX_LENGTH) {
 		command[i] = 0;	
-		if(strcmp(command,"time")){
+		int argsLength = strlen(args);
+		if(strcmp(command,"time") && argsLength == 0){
 			return TIME;
 		}	
-		else if (strcmp(command,"date")){
+		else if (strcmp(command,"date") && argsLength == 0){
 			return DATE;
 		}
-		else if (strcmp(command,"clear")){
+		else if (strcmp(command,"clear") && argsLength == 0){
 			return CLEAR;
 		}
-		else if (strcmp(command,"help")){
+		else if (strcmp(command,"help") && argsLength == 0){
 			return HELP;
 		}
-		else if (strcmp(command,"exit")){
+		else if (strcmp(command,"exit") && argsLength == 0){
 			clear();
 			return EXIT;
 		}
+		else if(strcmp(command,"echo")) {
+			return ECHO;
+		}
+		else if(strcmp(command,"linear")){
+			if(getInts(MAX_LINEAR_INTS) != MAX_LINEAR_INTS)
+			 	return COMMANDS_QUANTITY;
+			return LINEAR;
+		}
+		else if(strcmp(command,"quadratic")){
+			if(getInts(MAX_QUADRATIC_INTS) != MAX_QUADRATIC_INTS)
+			 	return COMMANDS_QUANTITY;
+			return QUADRATIC;
+		}
+
 	}
 	return COMMANDS_QUANTITY;
+}
+
+void readArgs(char * args) {
+	int c;
+	int i = 0;
+	while((c = getchar())!='\n') {
+		if(c!='\b') {
+			putchar(c);
+			if(i < COMMANDS_MAX_ARGS){
+		 		args[i] = c;
+				i++;
+			}
+		}
+		else if(i>0 && i<COMMANDS_MAX_ARGS) {
+		 		i--;
+		}
+	}
+	args[i] = 0;
+}
+
+int getInts(int totalArgs) {
+	int i;
+	int j=0;
+	int sign = 0;
+	for(i=0; args[i]; i++){
+		if(args[i]!=' ' && !isNum(args[i])){
+			if(args[i] == '-')
+				sign =1;
+			else
+				return MAX_QUADRATIC_INTS + 1;
+		}
+		else if(isNum(args[i])){
+			if(j < totalArgs){
+				functionArgs[j] = -sign* getNumber(args,&i);
+				j++;
+			}
+			else
+				return MAX_QUADRATIC_INTS + 1;
+		}
+	}
+	return j;
+}
+
+int getNumber(char* args, int* pos){
+	int num = 0;
+	while(isNum(args[*pos])){
+		num = num*10 + (args[*pos]-48);
+		(*pos)++;
+	}
+	(*pos)--;
+	return num;
+}
+
+void functionScreen(int a, int b, int c) {
+	clear();
+	printf("Presione q para salir.\n");
+	drawFunction(a,b,c);
+	int l;
+	while((l = getchar())!='q');
+	clear();
+	setUpShell();
 }

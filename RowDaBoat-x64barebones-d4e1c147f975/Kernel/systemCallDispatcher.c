@@ -17,9 +17,9 @@ uint32_t getYear(void);
 uint8_t getMonth(void);
 uint8_t getDay(void);
 
-uint64_t sys_paint(uint64_t x, uint64_t y, uint64_t color, uint64_t r8,uint64_t r9);
+uint64_t sys_paint(uint64_t x, uint64_t y);
 uint64_t sys_clear(void);
-uint64_t sys_writeChar(uint64_t fd,uint64_t buffer, uint64_t count, uint64_t x, uint64_t y);
+uint64_t sys_drawCharPosition(uint64_t l,uint64_t x, uint64_t y);
 uint64_t sys_getScreenInfo(uint64_t rdi);
 uint64_t sys_setPointer(uint64_t x, uint64_t y);
 
@@ -52,13 +52,13 @@ uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t
 				result =  sys_day();
 				break;
 			case 8:
-				result =  sys_paint(rdi,rsi,rdx,r8,r9);
+				result =  sys_paint(rdi,rsi);
 				break;
 			case 9:
 				result =  sys_clear();
 				break;
 			case 10:
-				result =  sys_writeChar(rdi,rsi,rdx,r8,r9);
+				result =  sys_drawCharPosition(rdi,rsi,rdx);
 				break;
 			case 11:
 				result =  sys_getScreenInfo(rdi);
@@ -134,14 +134,9 @@ uint8_t sys_day(){
 	return day;
 }
 
-//
-uint64_t sys_paint(uint64_t x, uint64_t y, uint64_t blue, uint64_t green,uint64_t red){
-	Color c={blue,green,red};
-	//draw_word("llego",0,0);
-	//char blue[4] = color.blue.() 
-	draw_pixel_with_color(x,y,c);
-	//draw_word("llego a pixel con color",0,0);
 
+uint64_t sys_paint(uint64_t x, uint64_t y){
+	draw_pixel(x,y);
 	return 0;
 }
 
@@ -152,10 +147,8 @@ uint64_t sys_clear(){
 }
 
 
-uint64_t sys_writeChar(uint64_t fd,uint64_t buffer, uint64_t count, uint64_t x, uint64_t y){
-	int i=0;
-	char *charbuffer=(char*)buffer;
-	draw_char_position(charbuffer[0], x, y);
+uint64_t sys_drawCharPosition(uint64_t l,uint64_t x, uint64_t y){
+	draw_char_position(l, x, y);
 	return 0;
 }
 
@@ -173,13 +166,3 @@ uint64_t sys_setPointer(uint64_t x, uint64_t y) {
 	setPointer(x,y);
 	return 0;
 }
-//
-
-// uint64_t sys_read(unsigned int fd, const char* buffer, uint64_t count) {
-// 	int i = 0;
-// 	while(i<count){
-// 		draw_char(buffer[i]);
-// 		i++;
-// 	}
-// 	return count;
-//}

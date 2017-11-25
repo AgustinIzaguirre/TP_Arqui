@@ -6,6 +6,8 @@
 #define RED_MASK 0x00FF0000
 #define GREEN_MASK 0x00FF00
 #define BLUE_MASK 0x0000FF
+#define CHAR_WIDTH 8
+#define CHAR_HEIGHT 16
 
 typedef struct Color {
 	uint64_t blue;
@@ -20,7 +22,6 @@ typedef struct pointer {
 
 
 
-//
 void draw_verticalTotalLine(int x);
 void draw_horizontalTotalLine(int y);
 void draw_verticalLine(int x, int y0, int y1);
