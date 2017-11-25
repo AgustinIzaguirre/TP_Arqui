@@ -1,4 +1,6 @@
 #define ZERO_EXCEPTION_ID 0
+#include <stdint.h>
+#include <videoDriver.h>
 
 static void zero_division();
 
@@ -8,5 +10,6 @@ void exceptionDispatcher(int exception) {
 }
 
 static void zero_division() {
-	// Handler para manejar excepcíon
+	draw_word("warning: division by zero.",0,0);
+	newLine();
 }

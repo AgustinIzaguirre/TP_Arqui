@@ -26,7 +26,6 @@ uint64_t sys_ChangeColor(uint64_t blue,uint64_t green,uint64_t red);
 
 uint64_t systemCallDispatcher(uint64_t rax, uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t r8, uint64_t r9) {
 		uint64_t result;
-		//draw_word("Entro en el dispatcher",0,0);
 		switch(rax) {
 			case 0:
 				result =sys_read(rdi,rsi,rdx);

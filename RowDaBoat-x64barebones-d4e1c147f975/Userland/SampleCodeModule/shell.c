@@ -22,6 +22,7 @@ void shell(){
 	setUpShell();
 	int command; 
 	printPrompt();
+	10/0;
 	while(command = getCommands()) {
 		if(command >= COMMANDS_QUANTITY) {
 			printf("command not found\n");

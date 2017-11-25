@@ -187,6 +187,10 @@ _systemCallsHandler:
 _exception0Handler:
 	exceptionHandler 0
 
+;overflow exception
+;_exception4Handler:
+;	exceptionHandler 4
+
 haltcpu:
 	cli
 	hlt
