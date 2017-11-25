@@ -135,9 +135,13 @@ uint8_t sys_day(){
 }
 
 //
-uint64_t sys_paint(uint64_t x, uint64_t y, uint64_t color, uint64_t r8,uint64_t r9){
-	Color c=hexaToColor(color);
+uint64_t sys_paint(uint64_t x, uint64_t y, uint64_t blue, uint64_t green,uint64_t red){
+	Color c={blue,green,red};
+	//draw_word("llego",0,0);
+	//char blue[4] = color.blue.() 
 	draw_pixel_with_color(x,y,c);
+	//draw_word("llego a pixel con color",0,0);
+
 	return 0;
 }
 

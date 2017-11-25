@@ -38,6 +38,7 @@ void set_up_VESA_mode();
 
 
     void draw_pixel_with_color(int x, int y,Color color){
+      //draw_word("llego a pixel con color",0,0);
 
       uint8_t * vi =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *y + mode_info->bpp/8*x);
       vi[0] = color.blue;
@@ -73,7 +74,7 @@ void set_up_VESA_mode();
       pointer.x += CHAR_WIDTH;
    }
 
-      void draw_char_position(uint8_t l, int x, int y){
+   void draw_char_position(uint8_t l, int x, int y){
       char * letter = pixel_map(l);
       int i,j;
       Color white = {0xFF,0xFF,0xFF};
@@ -163,10 +164,22 @@ void set_up_VESA_mode();
 
    void eraseLine(int y){
       int i,limit = mode_info->bpp * mode_info->width/CHAR_WIDTH;
+      pointer.y = y;
       for(i = 0; i<= limit;i++){
          draw_char_with_color(' ',i,y,background_color,background_color);
       }
 
+   }
+
+   void cls() {
+      int i , limit = mode_info->height/CHAR_HEIGHT;
+      pointer.x = 0;
+      pointer.y = 0;
+      while(pointer.y < mode_info->height) {
+         while(pointer.x < mode_info->width) {
+            draw_char(' ');
+         }
+      }
    }
 
    void copyLine(int to, int from){
@@ -209,24 +222,24 @@ void set_up_VESA_mode();
       draw_horizontalLine(0,mode_info->width,y);
    }
 
-void cls(){
-      Color c;
-      c.red=0;
-      c.green=0;
-      c.blue=0;
-      pointer.x=0;
-      pointer.y=0;
-      setBackgroundColor(background_color);
-   }
+// void cls(){
+//       Color c;
+//       c.red=0;
+//       c.green=0;
+//       c.blue=0;
+//       pointer.x=0;
+//       pointer.y=0;
+//       setBackgroundColor(background_color);
+//    }
 
-   void setBackgroundColor(Color color){
-      background_color = color;
-      for (int x=0; x<mode_info->height;x++){
-         for (int y=0;y<mode_info->width;y++){
-            draw_pixel_with_color(x,y, color);
-         }
-      }
-   }
+   // void setBackgroundColor(Color color){
+   //    background_color = color;
+   //    for (int x=0; x<mode_info->height;x++){
+   //       for (int y=0;y<mode_info->width;y++){
+   //          draw_pixel_with_color(x,y, color);
+   //       }
+   //    }
+   // }
 
    void drawFunction(int a, int b, int c){
       int height= mode_info->height;

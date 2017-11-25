@@ -1,6 +1,7 @@
 #include <shell.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <plotter.h>
 #include <date.h>
 #include <echo.h>
 #include <time.h>
@@ -11,8 +12,10 @@ uint64_t _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
 int width = 0;
 int height = 0;
 void shell(){
+	//draw_horizontalLine(0, 400, 100);
 	setUpShell();
 	int command; 
+
 	while(command = getCommands()) {
 		if(command >= COMMANDS_QUANTITY) {
 			printf("command not found\n");
@@ -31,6 +34,7 @@ void shell(){
 			}
 		}
 	}
+
 	//printPrompt();
 	//printf("height = %d\nwidth = %d\n",height,width);
 }

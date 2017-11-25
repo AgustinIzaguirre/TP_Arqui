@@ -6,7 +6,7 @@ extern uint64_t _int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, u
   
 	void draw_pixel_with_color(int x, int y,Color color){
       	uint64_t c=ColorToHexa(color);
-        _int80(8,x,y,c,0,0);//llamar a la SysCall que corresponde a pintar el pixel;
+        _int80(8,x,y,color.blue,color.green,color.red);//llamar a la SysCall que corresponde a pintar el pixel;
 	}
 
 	void draw_pixel(int x, int y){

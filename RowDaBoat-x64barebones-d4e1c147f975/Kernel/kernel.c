@@ -92,7 +92,7 @@ int _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
 
 int main()
 {	
-
+	//drawFunction(0,10,0);
 	// char * frase = "hola como va";
 	
  // 	char hora[2] = {0};
