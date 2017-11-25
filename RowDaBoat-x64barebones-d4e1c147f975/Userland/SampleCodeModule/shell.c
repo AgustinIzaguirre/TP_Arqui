@@ -55,7 +55,9 @@ int getCommands(){
 	char command [COMMAND_MAX_LENGTH];
 	int i = 0;
 	while((c = getchar())!='\n') {
-		 if(i!=0 || c != ' ') {
+		if(c!='\b')
+			putchar(c);
+		if(i!=0 || c != ' ') {
 		 	if(c == '\b'){
 		 		if(i > 0)
 		 			i--;
@@ -64,10 +66,11 @@ int getCommands(){
 		 		command[i] = c;
 				i++;
 			}
-		 }
+		}
 	}
+
 	if(i<COMMAND_MAX_LENGTH) {
-		
+		command[i] = 0;	
 		if(strcmp(command,"time")){
 			return TIME;
 		}	
