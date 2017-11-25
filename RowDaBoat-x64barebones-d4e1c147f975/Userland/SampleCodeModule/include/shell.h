@@ -24,7 +24,7 @@ void shell(void);
 void setUpShell(void) ;
 void printPrompt(void);
 int getCommands(void);
-void readArgs(char * args);
+int readArgs(char * args);
 int getInts(int totalArgs);
 int getNumber(char* args, int* pos);
 void functionScreen(int a, int b, int c);

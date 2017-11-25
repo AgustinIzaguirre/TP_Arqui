@@ -21,7 +21,7 @@ void shell(){
 	//drawFunction(2,0,0);
 	setUpShell();
 	int command; 
-
+	printPrompt();
 	while(command = getCommands()) {
 		if(command >= COMMANDS_QUANTITY) {
 			printf("command not found\n");
@@ -47,6 +47,8 @@ void shell(){
 						break;
 			}
 		}
+		if(command)
+			printPrompt();
 	}
 }
 
@@ -61,7 +63,6 @@ void printPrompt(){
 }
 
 int getCommands(){
-	printPrompt();
 	int c;
 	int i = 0;
 	while((c = getchar())!='\n' && (i==0 || c!=' ')) {
@@ -81,7 +82,8 @@ int getCommands(){
 
 	if(c == ' '){
 		putchar(c);
-		readArgs(args);
+		if(readArgs(args)==1)
+			return getCommands();
 	}
 	else {
 		args[0]=0;
@@ -130,7 +132,7 @@ int getCommands(){
 	return COMMANDS_QUANTITY;
 }
 
-void readArgs(char * args) {
+int readArgs(char * args) {
 	int c;
 	int i = 0;
 	while((c = getchar())!='\n') {
@@ -144,8 +146,12 @@ void readArgs(char * args) {
 		else if(i>0 && i<COMMANDS_MAX_ARGS) {
 		 		i--;
 		}
+		else {
+			return 1;
+		}
 	}
 	args[i] = 0;
+	return 0;
 }
 
 int getInts(int totalArgs) {
