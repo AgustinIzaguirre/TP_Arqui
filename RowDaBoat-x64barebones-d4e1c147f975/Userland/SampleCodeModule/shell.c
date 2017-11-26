@@ -22,7 +22,6 @@ void shell(){
 	setUpShell();
 	int command; 
 	printPrompt();
-	10/0;
 	while(command = getCommands()) {
 		if(command >= COMMANDS_QUANTITY) {
 			printf("command not found\n");
@@ -45,6 +44,8 @@ void shell(){
 				case QUADRATIC: functionScreen(functionArgs[0],functionArgs[1],functionArgs[2]);
 						break;
 				case COLOR:  color(functionArgs[0],functionArgs[1],functionArgs[2]);
+						break;
+				case TEST: test(functionArgs[0]);
 						break;
 			}
 		}
@@ -123,10 +124,14 @@ int getCommands(){
 			return QUADRATIC;
 		}
 		else if(strcmp(command,"color")){
-			if(getInts(MAX_COLOR_INTS) != MAX_COLOR_INTS || !valid(0,256,MAX_COLOR_INTS))
+			if(getInts(MAX_COLOR_INTS) != MAX_COLOR_INTS || !valid(0,255,MAX_COLOR_INTS))
 				return COMMANDS_QUANTITY;
-			//printf("b = %d, g = %d")
 			return COLOR;
+		}
+		else if(strcmp(command,"test")){
+			if(getInts(ID_INTS) != ID_INTS || !valid(0,2,ID_INTS))
+				return COMMANDS_QUANTITY;
+			return TEST;
 		}
 
 	}

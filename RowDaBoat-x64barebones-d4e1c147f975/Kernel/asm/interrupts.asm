@@ -20,6 +20,7 @@ GLOBAL _exception0Handler
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
 EXTERN systemCallDispatcher
+EXTERN main
 
 SECTION .text
 
@@ -63,6 +64,7 @@ SECTION .text
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
+	mov rsi,rsp
 	call irqDispatcher
 
 	; signal pic EOI (End of Interrupt)
@@ -113,12 +115,16 @@ SECTION .text
 %endmacro
 
 %macro exceptionHandler 1
+	push rsp;
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
+	mov rsi,rsp
 	call exceptionDispatcher
 
 	popState
+	pop rsp
+	mov qword [rsp], main
 	iretq
 %endmacro
 

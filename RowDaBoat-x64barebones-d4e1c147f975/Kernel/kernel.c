@@ -84,7 +84,6 @@ void * initializeKernelBinary()
 	ncNewline();
 	load_idt();
 
-	int a = ((EntryPoint)sampleCodeModuleAddress)();
 	return getStackBase();
 }
 
@@ -92,77 +91,15 @@ int _int80(uint64_t,uint64_t,uint64_t,uint64_t,uint64_t,uint64_t);
 
 int main()
 {	
-	//drawFunction(0,1,2);
-	// char * frase = "hola como va";
-	
- // 	char hora[2] = {0};
- // 	int horas = int80(4,0,0,0,0,0);
- // 	hora[1] = horas%10 + 48;
- // 	hora[0] = horas/10 + 48;
- // 	int80(1,0,hora,2,0,0);
-
- // int height= 500;
- //    int width = 500;
- //    double x=0;
- //    double y=0;
- //    double scale=0.01;
- //    for (int p=-500;p<500;p++){
- //      x=p*scale;
- //      y=1*x*x+0*x+0;
- //      y*= 100;
- //      int80(8,width/2 + p,height/2-y,0,0,0);
- //    }
-	//callWrite();
-	//draw_horizontalTotalLine(100);
-	//syscallsTest();
-	// // ncPrint("[Kernel Main]");
-	// // ncNewline();
-	// // ncPrint("  Sample code module at 0x");
-	// // ncPrintHex((uint64_t)sampleCodeModuleAddress);
-	// // ncNewline();
-	// // ncPrint("  Calling the sample code module returned: ");
-	// // ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
-	// // ncNewline();
-	// // ncNewline();
-
-	// // ncPrint("  Sample data module at 0x");
-	// // ncPrintHex((uint64_t)sampleDataModuleAddress);
-	// // ncNewline();
-	// // ncPrint("  Sample data module contents: ");
-	// // ncPrint((char*)sampleDataModuleAddress);
-	// // ncNewline();
-
-	// // ncPrint("[Finished]");
-	// int secs = getSeconds();
-	// int minutes = getMinutes();
-	// int hours = getHours();
-	// ncPrintDec(hours);
-	// ncPrint(" : ");
-	// ncPrintDec(minutes);
-	// ncPrint(" : ");
-	// ncPrintDec(secs);
-	// ncNewline();	
-	// ncPrint("Ticks elapsed: ");
-	// ncNewline();
-	// ncPrintDec(ticks_elapsed());
-	// ncNewline();
-	// uint64_t i = ticks_elapsed();
-	// while(i<10) {
-	// 	i = ticks_elapsed();
-	// }
-	// // 	ncPrintDec(ticks_elapsed());
-	// // 	ncNewline();
-	// // }
-	// //ncPrintDec(bcd_to_decimal(minutes));
-	// ncPrintDec(ticks_elapsed());
-	
-	// ncNewline();
-	// //ncPrintDec(getKey());
-	// //readKeyboard();
-	// ncNewline();
-	// ncPrint("Termino");
-	// ncNewline();
-	//set_up_VESA_mode();
+		// draw_word("entro en main",0,0);
+		((EntryPoint)sampleCodeModuleAddress)();
+		//draw_word("hola",0,0);
+		// printHexaNumber(1234);
+		// newLine();
+		// printHexaNumber(16);
+		// newLine();
+		// printHexaNumber(56789);
+		// newLine();
 	//while(1);
 	return 0;
 }

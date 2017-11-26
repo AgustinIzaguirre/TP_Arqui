@@ -12,12 +12,14 @@
 #define LINEAR 6
 #define QUADRATIC 7
 #define COLOR 8
+#define TEST 9
 #define COMMAND_MAX_LENGTH 10
-#define COMMANDS_QUANTITY 9
+#define COMMANDS_QUANTITY 10
 #define COMMANDS_MAX_ARGS 50
 #define MAX_LINEAR_INTS 2
 #define MAX_QUADRATIC_INTS 3
 #define MAX_COLOR_INTS 3
+#define ID_INTS 1
 
 
 void shell(void);

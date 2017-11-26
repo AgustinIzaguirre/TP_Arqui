@@ -300,3 +300,37 @@ void cls(){
       fontColor.green = green;
       fontColor.red = red;
    }
+
+   void printHexaNumber(uint64_t number) {
+      char n[16] ={0};
+      int index = 0,i;
+      do{
+         n[15 - index] = toHexa(number%16);
+         number = number/16;
+         index++;
+      }while(number);
+      for(i = 0; i<16; i++){
+         if(n[i])
+            draw_char(n[i]);
+      }
+   }
+
+   char toHexa(uint64_t n){
+      if(n>=0 && n<=9)
+         return (char)(n+48);
+      switch(n){
+         case 10:
+            return 'A';
+         case 11:
+            return 'B';
+         case 12:
+            return 'C';
+         case 13:
+            return 'D';
+         case 14:
+            return 'E';
+         case 15:
+            return 'F';
+      }
+      return 0;
+   }

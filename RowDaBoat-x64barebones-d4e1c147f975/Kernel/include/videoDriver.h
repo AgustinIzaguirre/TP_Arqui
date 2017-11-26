@@ -42,4 +42,7 @@ int getScreenHeigth(void);
 int getScreenWidth(void);
 void draw_char_position(uint8_t l, int x, int y);
 Color hexaToColor(uint64_t color);
+void printHexaNumber(uint64_t number);
+char toHexa(uint64_t n);
+
 #endif
