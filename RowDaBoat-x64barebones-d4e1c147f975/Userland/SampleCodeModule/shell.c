@@ -18,7 +18,6 @@ int width = 0;
 int height = 0;
 
 void shell(){
-	//drawFunction(2,0,0);
 	setUpShell();
 	int command; 
 	printPrompt();
@@ -49,8 +48,7 @@ void shell(){
 						break;
 			}
 		}
-		if(command)
-			printPrompt();
+		printPrompt();
 	}
 }
 
@@ -105,10 +103,6 @@ int getCommands(){
 		}
 		else if (strcmp(command,"help") && argsLength == 0){
 			return HELP;
-		}
-		else if (strcmp(command,"exit") && argsLength == 0){
-			clear();
-			return EXIT;
 		}
 		else if(strcmp(command,"echo")) {
 			return ECHO;

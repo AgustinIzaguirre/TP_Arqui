@@ -16,8 +16,9 @@ GLOBAL _irq05Handler
 GLOBAL _systemCallsHandler
 
 GLOBAL _exception0Handler
-GLOBAL _exception6Handler
+GLOBAL _exception3Handler
 GLOBAL _exception4Handler
+GLOBAL _exception6Handler
 GLOBAL _exception13Handler
 
 EXTERN irqDispatcher
@@ -195,6 +196,10 @@ _systemCallsHandler:
 ;Zero Division Exception
 _exception0Handler:
 	exceptionHandler 0
+
+;Breakpoint Exception
+_exception3Handler:
+	exceptionHandler 3
 
 ;Overflow Exception
 _exception4Handler:

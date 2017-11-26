@@ -3,7 +3,6 @@
 
 #define CHAR_HEIGHT 16
 
-#define EXIT 0
 #define TIME 1
 #define DATE 2
 #define CLEAR 3

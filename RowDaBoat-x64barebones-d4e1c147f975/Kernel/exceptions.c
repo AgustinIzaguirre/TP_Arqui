@@ -3,6 +3,7 @@
 
 #define ZERO_EXCEPTION_ID 0
 #define INVALID_OPCODE_EXCEPTION_ID 6
+#define BREAKPOINT 3
 #define OVERFLOW_ID 4
 #define GENERAL_PROTECTION_FAULT 13
 #define REGISTERS 15
@@ -11,6 +12,7 @@ static void invalid_opcode(uint64_t** rsp);
 static void printRegisters(uint64_t** rsp);
 static void overflow(uint64_t** rsp);
 static void general_protection_fault(uint64_t** rsp);
+static void breakpoint(uint64_t** rsp);
 
 char* registers[REGISTERS]={"r15", "r14", "r13", "r12", "r11", "r10","r9","r8", "rsi", "rdi", "rbp", "rdx", "rcx", "rbx", "rax"};
 
@@ -23,6 +25,8 @@ void exceptionDispatcher(int exception, uint64_t** rsp) {
 		overflow(rsp);
 	else if(exception == GENERAL_PROTECTION_FAULT)
 		general_protection_fault(rsp);
+	else if(exception == BREAKPOINT)
+		breakpoint(rsp);
 }
 
 static void zero_division(uint64_t** rsp) {
@@ -49,6 +53,12 @@ static void general_protection_fault(uint64_t** rsp){
 	draw_word("warning: general protection fault.",0,0);
 	newLine();
 	printRegisters(rsp);
+}
+
+static void breakpoint(uint64_t** rsp){
+	draw_word("warning: breakpoint.",0,0);
+	newLine();
+	printRegisters(rsp);	
 }
 
 static void printRegisters(uint64_t ** rsp) {

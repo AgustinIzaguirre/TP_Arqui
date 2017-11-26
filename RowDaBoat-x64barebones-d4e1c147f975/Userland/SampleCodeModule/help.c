@@ -9,6 +9,6 @@ void help() {
 	printf("   linear  a b: Plots the function corresponding to the linear equation y = ax + b\n\n");
 	printf("   quadratic  a b c: Plots the function corresponding to the quadratic equation y = ax^2 + bx + c\n\n");
 	printf("   color  b g r: change the font color to the color given b(blue) g(green) r(red) each of them between 0 and 256\n\n");
-	printf("   test  id: tests the exception corresponding to the given id 0 for zeroDivision, 1 for invalidOpCode ,2 for ...\n\n");
-	printf("   exit: To exit\n\n");
+	printf("   test  id: tests the exception corresponding to the given id 0 for zeroDivision, 1 for invalidOpCode ,2 for overflow\n");
+	printf("             ,3 for general protection fault.\n\n");
 }

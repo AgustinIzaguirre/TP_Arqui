@@ -9,7 +9,10 @@ void test(int id) {
 				break;
 		case OVERFLOW: overflowTest();
 				break;
-		case GENERALPROTECTIONFAULT: generalProtectionFaultTest();
+		// case GENERALPROTECTIONFAULT: generalProtectionFaultTest();
+		// 		break;
+			case BREAKPOINT: breakpointTest();
+				break;
 	}
 
 }
@@ -19,7 +22,7 @@ void zeroDivisionTest() {
 }
 
 // void generalProtectionFaultTest() {
-// 	int * p = 0;
+// 	int * p = -1;
 // 	*p = 10;
 // }
 
