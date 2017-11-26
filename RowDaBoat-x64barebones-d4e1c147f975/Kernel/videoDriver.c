@@ -12,6 +12,7 @@ Color background_color= {0,0,0};
 Color fontColor = {0xFF,0xFF,0xFF};
 int lastEnter = -1;
 
+/*sets the pointer to the given values*/
 void setPointer(int xvalue, int yvalue) {
    if(xvalue >= 0 && xvalue< mode_info->width && yvalue >= 0 && yvalue< mode_info->height) {
          pointer.x = xvalue;
@@ -19,6 +20,7 @@ void setPointer(int xvalue, int yvalue) {
    }
 }
 
+/*draw a pixel with the current font color in the given position*/
 void draw_pixel(int x, int y){
 
    uint8_t * vi =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *y + mode_info->bpp/8*x);
@@ -27,7 +29,7 @@ void draw_pixel(int x, int y){
    vi[2] = fontColor.red;
 }
 
-
+/*draws a pixel in the given position and with the given color*/
 void draw_pixel_with_color(int x, int y,Color color){
    uint8_t * vi =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *y + mode_info->bpp/8*x);
    vi[0] = color.blue;
@@ -35,6 +37,7 @@ void draw_pixel_with_color(int x, int y,Color color){
    vi[2] = color.red;
 }
 
+/*prints the given char on the screen at the pointers position*/
 void draw_char(uint8_t l) {
    char * letter = pixel_map(l);
    int i,j;
@@ -60,6 +63,7 @@ void draw_char(uint8_t l) {
    pointer.x += CHAR_WIDTH;
 }
 
+   /*draw the given char on the screen at the given position*/
    void draw_char_position(uint8_t l, int x, int y){
       char * letter = pixel_map(l);
       int i,j;
@@ -80,6 +84,9 @@ void draw_char(uint8_t l) {
       x += CHAR_WIDTH;     
    }
 
+   /*draw the given char on the screen at the given position and with
+   ** the given color
+   */
    void draw_char_with_color(uint8_t l, int x, int y,Color letter_color, Color background_color) {
       char * letter = pixel_map(l);
       int i,j;
@@ -96,6 +103,7 @@ void draw_char(uint8_t l) {
       pointer.x += CHAR_WIDTH;
    }
 
+   /*prints the given string starting at the current pointers position*/
    void draw_word(char * word) {
 
       int i = 0;
@@ -105,6 +113,7 @@ void draw_char(uint8_t l) {
       }
    }
 
+   /*deletes the last char printed*/
    void erase_char(){
       if(pointer.x == 0){
          if(pointer.y != 0) {
@@ -121,6 +130,7 @@ void draw_char(uint8_t l) {
       pointer.x = pointer.x - CHAR_WIDTH;
    }
 
+   /*prints a new line at the current pointers position*/
    void newLine(){
       lastEnter = pointer.x;
      if(pointer.y = mode_info->height - CHAR_HEIGHT){
@@ -132,6 +142,9 @@ void draw_char(uint8_t l) {
       pointer.x = 0;
    }
 
+   /*scroll up the screen copying to each line of the screen
+   ** its following and leaving the last one empty
+   */
    void scrollUp(){
       int i;
       static int quantity = 0;
@@ -146,6 +159,7 @@ void draw_char(uint8_t l) {
       quantity++;
    }
 
+   /*deletes the line of height y*/
    void eraseLine(int y){
       int i,limit = mode_info->bpp * mode_info->width/CHAR_WIDTH;
       pointer.y = y;
@@ -154,6 +168,7 @@ void draw_char(uint8_t l) {
       }
    }
 
+   /*copys into the line of height to the line of height from*/
    void copyLine(int to, int from){
       uint8_t * v1 =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *to);
       uint8_t * v2 =(uint8_t*) (mode_info->framebuffer + mode_info->pitch *from);
@@ -170,7 +185,8 @@ void draw_char(uint8_t l) {
       }
    }
 
-void cls(){
+   /*clears the screen*/
+   void cls(){
       Color c;
       c.red=0;
       c.green=0;
@@ -180,6 +196,7 @@ void cls(){
       setBackgroundColor(background_color);
    }
 
+   /*paints all the screen with the given color*/
    void setBackgroundColor(Color color){
       background_color = color;
       for (int y=0; y<mode_info->height;y++){
@@ -188,24 +205,25 @@ void cls(){
          }
       }
    }
-
    
-   
-    int getScreenHeigth(){
+   /*returns the screen height*/
+   int getScreenHeigth(){
       return mode_info->height;
    }
 
-
+   /*returns the screen width*/
    int getScreenWidth(){
       return mode_info->width;
    }
 
+   /*sets the font color to the given color*/
    void setFontColor(uint8_t blue, uint8_t green, uint8_t red){
       fontColor.blue = blue;
       fontColor.green = green;
       fontColor.red = red;
    }
 
+   /*prints the given number in its hexadecimal representation*/
    void printHexaNumber(uint64_t number) {
       char n[16] ={0};
       int index = 0,i;
@@ -220,7 +238,11 @@ void cls(){
       }
    }
 
-   char toHexa(uint64_t n){
+   /*returns the char corresponding to the hexadecimal representation
+   ** of the given number, the given number must be between 0 and 15
+   ** if not it will return 0;
+   */
+   static char toHexa(uint64_t n){
       if(n>=0 && n<=9)
          return (char)(n+48);
       switch(n){
