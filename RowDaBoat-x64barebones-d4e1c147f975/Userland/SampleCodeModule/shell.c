@@ -79,9 +79,8 @@ int getCommands(){
 			}
 		}
 	}
-
+	putchar(c);
 	if(c == ' '){
-		putchar(c);
 		if(readArgs(args)==1)
 			return getCommands();
 	}
@@ -150,6 +149,7 @@ int readArgs(char * args) {
 			return 1;
 		}
 	}
+	putchar(c);
 	args[i] = 0;
 	return 0;
 }

@@ -51,7 +51,6 @@ void keyboard_handler() {
 			else if(l == NEWLINECODE){
 				buffer[index] = '\n';
 				incrementIndex();
-				newLine();
 				count = 0;
 			}
 		}	
