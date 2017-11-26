@@ -129,7 +129,7 @@ int getCommands(){
 			return COLOR;
 		}
 		else if(strcmp(command,"test")){
-			if(getInts(ID_INTS) != ID_INTS || !valid(0,2,ID_INTS))
+			if(getInts(ID_INTS) != ID_INTS || !valid(0,3,ID_INTS))
 				return COMMANDS_QUANTITY;
 			return TEST;
 		}

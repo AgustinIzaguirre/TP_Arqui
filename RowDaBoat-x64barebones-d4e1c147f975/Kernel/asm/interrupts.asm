@@ -16,6 +16,9 @@ GLOBAL _irq05Handler
 GLOBAL _systemCallsHandler
 
 GLOBAL _exception0Handler
+GLOBAL _exception6Handler
+GLOBAL _exception4Handler
+GLOBAL _exception13Handler
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
@@ -193,16 +196,22 @@ _systemCallsHandler:
 _exception0Handler:
 	exceptionHandler 0
 
-;overflow exception
-;_exception4Handler:
-;	exceptionHandler 4
+;Overflow Exception
+_exception4Handler:
+	exceptionHandler 4
+
+;Invalid Opcode Exception
+_exception6Handler:
+	exceptionHandler 6
+
+;General Protection Fault
+_exception13Handler:
+	exceptionHandler 13
 
 haltcpu:
 	cli
 	hlt
 	ret
-
-
 
 SECTION .bss
 	aux resq 1
