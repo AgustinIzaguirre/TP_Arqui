@@ -5,18 +5,24 @@
 #include <stdarg.h>
 extern uint64_t _int80(uint64_t rdi, uint64_t rsi, uint64_t rdx, uint64_t rcx, uint64_t r8, uint64_t r9);
 
+/*returns 1 if the given char is a letter, returns 0 if not*/
 int isAlpha(char c){
 	return ((c>='A' && c<='Z') || (c>='a' && c<='z'));
 }
 
+/*returns 1 if the given char is a digit, returns 0 if not*/
 int isNum(char c){
 	return (c>='0' && c<='9');
 }
 
+/*returns 1 if the given char is a space, returns 0 if not*/
 int isSpace(char c){
 	return (c=' ');
 }
 
+/*turns the given integer into a string and stores it in
+** the given array
+*/
 void intToStr(int num,char * ret){
 	int dig=0;
 	char aux;
@@ -41,6 +47,8 @@ void intToStr(int num,char * ret){
 		ret[0]='0';
 	}	
 }
+
+/*reverse the given string*/
 void strrev(char * str){
 	int length= strlen(str);
 	char aux[length];
@@ -52,6 +60,7 @@ void strrev(char * str){
 	}
 }
 
+/*returns the length of the given string*/
 int strlen(const char * str){
 	int i=0;
 	while(str[i]!= '\0'){
@@ -60,6 +69,7 @@ int strlen(const char * str){
 	return i;
 }
 
+/*copys the first string into the second string*/
 int strcpy(char *from, char *to){
 	int i=0;
 	for (i=0;from[i]!='\0';i++){
@@ -69,6 +79,7 @@ int strcpy(char *from, char *to){
 	return i;
 }
 
+/*returns 0 if the given strings are diferent and 1 if they are equals*/
 int strcmp(char * array1, char * array2) {
 	int i=0;
 	for (i=0;array2[i]!='\0';i++){
@@ -78,6 +89,10 @@ int strcmp(char * array1, char * array2) {
 	return array1[i] == array2[i];
 }
 
+/*prints the given string replacing %d with the integer
+** parameter received and %s with the string parameter
+** and %c with the char parameter received
+*/
 void printf(const char * str,...){
 	char num[12];
 	va_list valist;
@@ -119,11 +134,12 @@ void printf(const char * str,...){
 	va_end(valist);
 }
 
+/* print the given char on screen*/
 void putchar(const char c){
 	_int80(1,1,&c,1,0,0);
 }
 
-
+/*reads a char from the buffer and returns it*/ 
 int getchar() {
 	char c;
 	_int80(0,0,&c,1,0,0);

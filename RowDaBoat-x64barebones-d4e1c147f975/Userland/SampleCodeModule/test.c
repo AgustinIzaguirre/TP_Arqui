@@ -1,6 +1,7 @@
 #include <test.h>
 #include <stdlib.h>
 
+/*generates the exception corresponding to the given index*/
 void test(int id) {
 	switch(id) {
 		case ZERODIVISION: zeroDivisionTest();

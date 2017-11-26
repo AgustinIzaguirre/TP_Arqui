@@ -52,16 +52,21 @@ void shell(){
 	}
 }
 
+/*set up the pointer to the las line*/
 void setUpShell() {
 	width = (int)_int80(11,0,0,0,0,0);
 	height = (int)_int80(11,1,0,0,0,0);
 	_int80(12,0,height - 1*CHAR_HEIGHT,0,0,0);
 }
 
+/*prints the prompt*/
 void printPrompt(){
 	printf("$>");
 }
 
+/*read the input and returns a value corresponding to the
+** command read.
+*/
 int getCommands(){
 	int c;
 	int i = 0;
@@ -131,6 +136,9 @@ int getCommands(){
 	return COMMANDS_QUANTITY;
 }
 
+/*reads from the input until enter and returns 0 if could be read
+** 1 if there were more backspaces than typed chars
+*/
 int readArgs(char * args) {
 	int c;
 	int i = 0;
@@ -154,6 +162,9 @@ int readArgs(char * args) {
 	return 0;
 }
 
+/*stores the numbers of the argument read in an integer vector 
+** and returns how many ints were given
+*/
 int getInts(int totalArgs) {
 	int i;
 	int j=0;
@@ -177,6 +188,9 @@ int getInts(int totalArgs) {
 	return j;
 }
 
+/*turns the string starting in args at the position pos
+** into its corresponding integer value
+*/
 int getNumber(char* args, int* pos){
 	int num = 0;
 	while(isNum(args[*pos])){
@@ -187,6 +201,10 @@ int getNumber(char* args, int* pos){
 	return num;
 }
 
+/*set the screen to plot a function and then plots it
+** when q is pressed clears the screen and returns to
+** shell screen mode.
+*/
 void functionScreen(int a, int b, int c) {
 	clear();
 	printf("Presione q para salir.\n");
@@ -197,6 +215,9 @@ void functionScreen(int a, int b, int c) {
 	setUpShell();
 }
 
+/*returns 1 if all of the integer numbers read in the
+** argument are between from and to, returns 0 if not
+*/
 int valid(int from,int to,int size){
 	int i;
 	for(i=0; i <size; i++){

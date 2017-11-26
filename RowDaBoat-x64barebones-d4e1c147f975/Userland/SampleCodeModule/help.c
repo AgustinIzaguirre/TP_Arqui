@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+/*prints the menu with the avaliable commands and their description*/
 void help() {
 
 	printf("   time: Prints Argentine time in HH:MM:SS format\n\n");

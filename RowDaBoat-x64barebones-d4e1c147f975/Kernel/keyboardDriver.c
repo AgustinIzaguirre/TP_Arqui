@@ -8,7 +8,7 @@
 int isAlpha(char);
 static int count = 0;
 static uint8_t status = 0;
-uint8_t buffer[256];
+uint8_t buffer[BUFFERSIZE];
 uint16_t index = 0;
 uint16_t read = 0;
 
