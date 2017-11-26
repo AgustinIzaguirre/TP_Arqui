@@ -12,11 +12,8 @@ uint8_t buffer[256];
 uint16_t index = 0;
 uint16_t read = 0;
 
-void sleep(void);
-
 void keyboard_handler() {
 	char l = getKey();
-	sleep();
 	if(l >0) {
 		if(kbdus[l]) {
 			count++;
@@ -60,13 +57,6 @@ void keyboard_handler() {
 			status = status & (~(1<<SHIFT));
 
 	}
-}
-
-void sleep(){
-	_cli();
-	int i = 0;
-	for(i = 0; i< 1000; i++);
-	_sti();
 }
 
 void incrementIndex(){
