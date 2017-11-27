@@ -3,6 +3,5 @@
 
 int main() {
 	shell();
-	
 	return 10;
 }

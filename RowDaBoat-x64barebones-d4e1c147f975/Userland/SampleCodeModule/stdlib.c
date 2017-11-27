@@ -146,133 +146,92 @@ int getchar() {
 	return c;
 }
 
-// /*
-// ** Lee una línea de entrada estándar de longitud como mucho maxlen y la guarda en str.
-// */
-// int readline(char *str, unsigned int maxlen) {
-//     unsigned int i;
-//     int c;
-//     for (i = 0; i < maxlen-1 && (c = getchar()) != '\n'; i++) 
-// 			str[i] = c;
-//     str[i] = '\0';
-//     return i;
-// }
+/*reads from the input the given format and when finds a %d or %c or %s
+** reads and stores its content in the int, char, or char* respectively that
+** were given
+*/ 
+int scanf(const char* format,...){
+	va_list args;
+	va_start( args, format );
 
-// int scanf(const char* str, ...){
-// 	va_list args;
-// 	va_start(args,c);
+	int quantity=0;
+	int i = 0,j=0;
+	char* read = readLine();
+	int* number;
+    char* string;
 
-// 	int ret = 0;
-// 	int flag = 0;
-// 	int i = 0;
-// 	char buffer[MAX];
-// 	int j = 0;
-// 	char currentChar;
 
-// 	while((currentChar = getchar()) != '\n'){
-// 		if(currentChar == '\b'){
-// 			if(j>0){
-// 				buffer[--j] = 0;
-// 				printf("\b");
-// 			}
-// 		}else{
-// 			if(j < MAX){
-// 				buffer[j++]	= currentChar;
-// 				putChar(currentChar);
-// 			}
-// 		}
-// 	}
-// 	buffer[j] = 0;
-// 	j = 0;
+	while(format[i]){
+		if(format[i]!='%'){
+            if((format[i]) != (read[j])){
+                return quantity;
+            } 
+            else {
+                 i++;
+                 j++;
+            }
+		}
+		else {
+			i++;
+			switch(format[i]){
+				case '%':
+                    if(read[j] != '%')
+                    	return quantity;
+                    j++;
+                    break;
+				case 'd':
+					number = va_arg(args,int*);
+					*number = 0;
+					while(isNum(read[j])) {
+						*number = (*number) *10 + read[j] - 48;
+						j++;
+					}
+				    quantity++;
+					break;
+				case 'c':
+                    string = va_arg(args, char*);
+                    *string = read[j];
+                    j++;
+                    quantity++;
+                    break;
+				case 's':
+                    string = va_arg(args,char*);
+                    char c;
+                    while(c = read[j]){
+                        *string = c;
+                        string++;
+                        j++;
+                    }
+                    quantity++;
+			}
+			i++;
+		}
+	}
 
-// 	while(c[i]!=0&&ret>=0){
-// 		switch(c[i]) {
-// 			case '%':
-// 				if(flag) {
-// 					if(buffer[j]!='%')
-// 						ret = -1;
-// 					else
-// 						j++;
-// 				} else {
-// 					flag = 1;
-// 				}
-// 				break;
-// 			case 'd':
-// 				if(flag){
-// 					if(getNumber(va_arg(args,int*),buffer,&j))
-// 						ret++;
-// 					else
-// 						ret = -1;
-// 					flag = 0;
-// 				} else {
-// 					if(buffer[j]!='d')
-// 						ret = -1;
-// 					else
-// 						j++;
-// 				}
-// 				break;
-// 			case 's':
-// 			if(flag){
-// 					j += copyString(buffer+j,va_arg(args,char*));
-// 					ret++;
-// 					flag = 0;
-// 				} else {
-// 					if(buffer[j]!='s')
-// 						ret = -1;
-// 					else
-// 						j++;
-// 				}
-// 				break;
-// 			default:
-// 				if(buffer[j]!=c[i])
-// 					ret = -1;
-// 				else
-// 					j++;
-// 		}
-// 		i++;
-// 	}
-// 	printf("\n");
-// 	va_end(args);
-// 	return ret;
-// }
+	return quantity;
+}
 
-// int scanf(const char *format, ...) {
-// 	int i, j, num;
-// 	int argc = 0;
-// 	int *p;
-// 	char *str;
-// 	char aux[BUFFER_SIZE];
-// 	va_list args;
-// 	va_start(args, format);
+/*reads text from the input until enter and returns what has read*/
+char* readLine() {
+    int bufferIndex = 0;
+    char buff[BUFFER_SIZE];
 
-// 	readline(aux, BUFFER_SIZE);
+    int c ;
 
-// 	for (i = j = 0; aux[j] != '\0' && format[i] != '\0'; i++, j++) {
-// 		if (format[i] == '%') {
-// 			i++;
-// 			if (format[i] == 'd') {
-// 				if(aux[j] != '+' && aux[j] != '-' && !isdigit(aux[j]))
-// 					return argc;
-// 				num = atoi(aux + j);
-// 				p = va_arg(args, int *);
-// 				*p = num;
-// 				while (isdigit(aux[j+1]))
-// 					j++;
-// 			}
-// 			else if (format[i] == 's') {
-// 				str = va_arg(args, char *);
-// 				strcpy(str, aux+j);
-// 				return argc+1;
-// 			}
-// 			else if (format[i] == '%' && aux[j++] != '%')
-// 				return argc;
-// 			argc++;
-// 		} 
-// 		else if (format[i] != aux[j])
-// 			return argc;
-// 	}
-
-// 	va_end(args);
-// 	return argc;
-// }
-
+    while ((c = getchar()) != '\n') {
+        if(c == '\b'){
+            if (bufferIndex != 0) {
+                bufferIndex--;
+            }
+        }
+        else{
+            if (bufferIndex <= BUFFER_SIZE) {
+                buff[bufferIndex++] = c;
+            }
+            putchar(c);
+        }
+    }
+    putchar(c);
+    buff[bufferIndex] = '\0';
+    return buff;
+}

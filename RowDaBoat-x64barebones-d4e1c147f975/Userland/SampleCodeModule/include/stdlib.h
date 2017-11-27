@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define BUFFER_SIZE 256
+
 /*returns 1 if the given char is a letter, returns 0 if not*/
 int isAlpha(char c);
 
@@ -40,5 +42,14 @@ void putchar(const char c);
 
 /*reads a char from the buffer and returns it*/ 
 int getchar(void);
+
+/*reads from the input the given format and when finds a %d or %c or %s
+** reads and stores its content in the int, char, or char* respectively that
+** were given
+*/ 
+int scanf(const char* format,...);
+
+/*reads text from the input until enter and returns what has read*/
+char* readLine(void);
 
 #endif
