@@ -2,9 +2,8 @@
 #include <videoDriver.h>
 #include <exceptions.h>
 
-
-char* registers[REGISTERS]={"r15", "r14", "r13", "r12", "r11", "r10","r9","r8", "rsi", "rdi", "rbp", "rdx", "rcx", "rbx", "rax"};
-
+char* registers[REGISTERS]={"rax", "rbx", "rcx", "rdx", "rbp", "rdi","rsi","r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15"};
+uint64_t * registersData[REGISTERS];
 void exceptionDispatcher(int exception, uint64_t* rsp) {
 	if (exception == ZERO_EXCEPTION_ID)
 		zero_division(rsp);
@@ -51,12 +50,31 @@ static void breakpoint(uint64_t* rsp){
 }
 
 static void printRegisters(uint64_t* rsp) {
+	
+	for (int i = 0 ; i < REGISTERS ; i++){
+		registersData[i] = rsp[i];
+	}	
+
 	for(int i = 0; i<REGISTERS; i++) {
 		draw_word(registers[i]);
 		draw_word(":  ");
-		printHexaNumber(*rsp);
-		rsp--;
+		printHexaNumber(registersData[i]);
 		newLine();
 	}
 }
 
+// void printRegs(uint64_t * rsp){
+// 	for (int i = 0 ; i < REGISTERS ; i++)
+// 	{
+// 		regs[i].content = rsp[i];
+// 	}
+
+// 	for(int j = REGISTERS-1; j >= 0; j--)
+// 	{
+// 		draw_word(regs[j].name);
+// 		draw_word(" - ");
+// 		printHexaNumber(regs[j].content);
+// 		newLine();
+
+// 	}
+// }

@@ -87,18 +87,28 @@ SECTION .text
 %endmacro
 
 %macro exceptionHandler 1
-	push rsp;
 	pushState
 
 	mov rdi, %1 ; pasaje de parametro
-	mov rsi,rsp
+	mov rsi, rsp
 	call exceptionDispatcher
-
 	popState
-	pop rsp
 	mov qword [rsp], main
 	iretq
 %endmacro
+;%macro exceptionHandler 1
+;	push rsp;
+;	pushState
+;
+;	mov rdi, %1 ; pasaje de parametro
+;	mov rsi,rsp
+;	call exceptionDispatcher
+;
+;	popState
+;	pop rsp
+;	mov qword [rsp], main
+;	iretq
+;%endmacro
 
 
 _hlt:
