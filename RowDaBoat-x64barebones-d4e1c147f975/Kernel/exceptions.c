@@ -56,25 +56,9 @@ static void printRegisters(uint64_t* rsp) {
 	}	
 
 	for(int i = 0; i<REGISTERS; i++) {
-		draw_word(registers[i]);
+		draw_word(registers[REGISTERS -1 -i]);
 		draw_word(":  ");
 		printHexaNumber(registersData[i]);
 		newLine();
 	}
 }
-
-// void printRegs(uint64_t * rsp){
-// 	for (int i = 0 ; i < REGISTERS ; i++)
-// 	{
-// 		regs[i].content = rsp[i];
-// 	}
-
-// 	for(int j = REGISTERS-1; j >= 0; j--)
-// 	{
-// 		draw_word(regs[j].name);
-// 		draw_word(" - ");
-// 		printHexaNumber(regs[j].content);
-// 		newLine();
-
-// 	}
-// }
